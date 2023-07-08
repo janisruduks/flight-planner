@@ -8,11 +8,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/testing-api")
-public class TestingController {
+public class TestingApiController {
 
     private final FlightServiceMemory flightService;
 
-    public TestingController(FlightServiceMemory flightService) {
+    public TestingApiController(FlightServiceMemory flightService) {
         this.flightService = flightService;
     }
 
