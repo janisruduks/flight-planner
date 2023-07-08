@@ -7,11 +7,11 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Repository
-public class FlightRepository {
+public class FlightRepositoryInMemoryImpl implements FlightRepository {
 
     private final HashSet<FlightDTO> flights;
 
-    public FlightRepository() {
+    public FlightRepositoryInMemoryImpl() {
         this.flights = new HashSet<>();
     }
 
@@ -24,7 +24,7 @@ public class FlightRepository {
         return new HashSet<>(flights);
     }
 
-    public void deleteAllFlights() {
+    public void deleteAll() {
         this.flights.clear();
     }
 
@@ -32,12 +32,12 @@ public class FlightRepository {
         return this.flights.add(flight);
     }
 
-    public synchronized boolean deleteById(String id) {
+    public synchronized void deleteById(String id) {
         Set<FlightDTO> flightsCopy = new HashSet<>(flights);
         FlightDTO flightDTO = flightsCopy.stream()
                 .filter(flight -> flight.getId().equals(id))
                 .findFirst()
                 .orElse(null);
-        return flights.remove(flightDTO);
+        flights.remove(flightDTO);
     }
 }
