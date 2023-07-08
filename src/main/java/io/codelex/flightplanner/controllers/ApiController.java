@@ -1,37 +1,43 @@
 package io.codelex.flightplanner.controllers;
 
+import io.codelex.flightplanner.dtos.AirportDTO;
+import io.codelex.flightplanner.dtos.FlightDTO;
+import io.codelex.flightplanner.dtos.FlightSearchDTO;
+import io.codelex.flightplanner.responses.FlightSearchResponse;
+import io.codelex.flightplanner.services.FlightServiceMemory;
+import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 
-import io.codelex.flightplanner.domain.Flight;
-import io.codelex.flightplanner.repository.FlightRepository;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @RestController
-@RequestMapping({"/api/flights", "/admin-api/flights"})
-public class ApiUserController {
+@RequestMapping("/api")
+@Validated
+public class ApiController {
 
-    private final FlightRepository flightRepository;
+    private final FlightServiceMemory flightService;
 
-    public ApiUserController(FlightRepository flightRepository) {
-        this.flightRepository = flightRepository;
+    public ApiController(FlightServiceMemory flightService) {
+        this.flightService = flightService;
     }
 
-    @GetMapping()
-    public HashMap<Long, Flight> getFlights() {
-        return this.flightRepository.getFlightsList();
+    @PostMapping("/flights/search")
+    public ResponseEntity<FlightSearchResponse> searchForFlight(@Valid @RequestBody FlightSearchDTO flightSearchDTO) {
+        FlightSearchResponse response = flightService.searchForFlight(flightSearchDTO);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
-    @GetMapping()
-    public List<Map.Entry<Long, Flight>> searchByParameters(@RequestParam String search) {
-        HashMap<Long, Flight> x = flightRepository.getFlightsList();
-        return x.entrySet().stream()
-                .filter(a -> a.getValue().getFrom().getAirport().equals(search))
-                .toList();
+    @GetMapping("/flights/{id}")
+    public ResponseEntity<FlightDTO> getFlightById(@PathVariable String id) {
+        return ResponseEntity.status(HttpStatus.OK).body(flightService.getFlightById(id));
+    }
+
+    @GetMapping("/airports")
+    @ResponseStatus(HttpStatus.OK)
+    public List<AirportDTO> searchByParameters(@RequestParam String search) {
+        return flightService.getFilteredMatchList(search.trim().toLowerCase());
     }
 }
