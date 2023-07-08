@@ -14,7 +14,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Service
-public class FlightServiceMemory implements FlightService {
+public class FlightServiceMemory {
 
     private final FlightRepositoryInMemoryImpl flightRepository;
 

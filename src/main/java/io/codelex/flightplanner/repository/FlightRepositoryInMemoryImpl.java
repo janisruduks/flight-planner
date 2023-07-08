@@ -7,7 +7,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Repository
-public class FlightRepositoryInMemoryImpl implements FlightRepository {
+public class FlightRepositoryInMemoryImpl {
 
     private final HashSet<FlightDTO> flights;
 
@@ -17,11 +17,6 @@ public class FlightRepositoryInMemoryImpl implements FlightRepository {
 
     public HashSet<FlightDTO> getFlights() {
         return this.flights;
-    }
-
-    // could try to pass copy to certain methods
-    public Set<FlightDTO> getFlightsCopy() {
-        return new HashSet<>(flights);
     }
 
     public void deleteAll() {
