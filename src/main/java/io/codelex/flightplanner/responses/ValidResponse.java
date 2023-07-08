@@ -1,3 +1,3 @@
 package io.codelex.flightplanner.responses;
 
-public record ApiResponse(Object data) {}
+public record ValidResponse(Object data) {}
