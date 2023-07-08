@@ -4,7 +4,7 @@ import io.codelex.flightplanner.domain.Flight;
 import io.codelex.flightplanner.dtos.FlightDTO;
 import io.codelex.flightplanner.mappers.FlightMapper;
 import io.codelex.flightplanner.responses.ValidResponse;
-import io.codelex.flightplanner.services.FlightService;
+import io.codelex.flightplanner.services.FlightServiceMemory;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,11 +16,10 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/admin-api/flights")
 public class AdminApiController {
 
-    //TODO fix dates
-    private final FlightService flightService;
+    private final FlightServiceMemory flightService;
     private final FlightMapper mapper;
 
-    public AdminApiController(FlightService flightService, FlightMapper mapper) {
+    public AdminApiController(FlightServiceMemory flightService, FlightMapper mapper) {
         this.flightService = flightService;
         this.mapper = mapper;
     }
