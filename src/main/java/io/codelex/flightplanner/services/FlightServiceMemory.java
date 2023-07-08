@@ -1,42 +1,52 @@
 package io.codelex.flightplanner.services;
 
+import io.codelex.flightplanner.dtos.AirportDTO;
 import io.codelex.flightplanner.dtos.FlightDTO;
 import io.codelex.flightplanner.dtos.FlightSearchDTO;
-import io.codelex.flightplanner.repository.FlightRepository;
+import io.codelex.flightplanner.exceptions.DuplicateEntryException;
+import io.codelex.flightplanner.exceptions.EqualAirportsException;
+import io.codelex.flightplanner.exceptions.FlightNotFoundByIdException;
+import io.codelex.flightplanner.repository.FlightRepositoryInMemoryImpl;
 import io.codelex.flightplanner.responses.FlightSearchResponse;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
+import java.time.LocalDate;
 import java.util.List;
-import java.util.Set;
 
 @Service
-public class FlightService {
+public class FlightServiceMemory implements FlightService {
 
-    private final FlightRepository flightRepository;
+    private final FlightRepositoryInMemoryImpl flightRepository;
 
-    public FlightService(FlightRepository flightRepository) {
+    public FlightServiceMemory(FlightRepositoryInMemoryImpl flightRepository) {
         this.flightRepository = flightRepository;
     }
 
     public FlightSearchResponse searchForFlight(FlightSearchDTO searchDTO) {
-        validateToAndFrom(searchDTO.getFrom(), searchDTO.getTo());
-        List<FlightDTO> flights = flightRepository.searchForAirports(searchDTO.getFrom(), searchDTO.getTo(), searchDTO.getBaseDate());
+        validateAirports(searchDTO.getFrom(), searchDTO.getTo());
+        List<FlightDTO> flights = searchForAirports(searchDTO.getFrom(), searchDTO.getTo(), searchDTO.getBaseDate());
         return new FlightSearchResponse(flights, 0, flights.size());
     }
 
-    private void validateToAndFrom(String from, String to) {
-        if (to.equals(from)) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
-        }
+    public List<FlightDTO> searchForAirports(String from, String to, LocalDate departureDate) {
+        return flightRepository.getFlights().stream()
+                .filter(flightDTO -> flightDTO.getDepartureTime().toLocalDate().equals(departureDate))
+                .filter(flightDTO -> flightDTO.getFrom().getAirport().equals(from))
+                .filter(flightDTO -> flightDTO.getTo().getAirport().equals(to))
+                .toList();
     }
 
     public void addFlight(FlightDTO flight) {
-        if (flight.getFrom().equals(flight.getTo())) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        validateAirports(flight.getFrom(), flight.getTo());
+        if (!flightRepository.add(flight)) {
+            throw new DuplicateEntryException();
         }
-        flightRepository.add(flight);
+    }
+
+    public <T> void validateAirports(T airportFrom, T airportTo) {
+        if (airportTo.equals(airportFrom)) {
+            throw new EqualAirportsException();
+        }
     }
 
     public void deleteFlightById(String id) {
@@ -44,14 +54,25 @@ public class FlightService {
     }
 
     public FlightDTO getFlightById(String id) {
-        return flightRepository.getFlightById(id);
+        return flightRepository.getFlights().stream()
+                .filter(flight -> flight.getId().equals(id))
+                .findFirst()
+                .orElseThrow(FlightNotFoundByIdException::new);
     }
 
-    public Set<FlightDTO> getAllFlights() {
-        return flightRepository.getFlights();
+    public List<AirportDTO> getFilteredMatchList(String match) {
+        return flightRepository.getFlights().stream()
+                .map(FlightDTO::getFrom)
+                .filter(from ->
+                        from.getAirport().toLowerCase().contains(match)
+                                || from.getCity().toLowerCase().contains(match)
+                                || from.getCountry().toLowerCase().contains(match)
+                )
+                .map(from -> new AirportDTO(from.getCountry(), from.getCity(), from.getAirport()))
+                .toList();
     }
 
     public void clearRepository() {
-        this.flightRepository.deleteAllFlights();
+        this.flightRepository.deleteAll();
     }
 }
