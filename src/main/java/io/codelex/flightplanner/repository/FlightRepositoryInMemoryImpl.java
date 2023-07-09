@@ -3,19 +3,19 @@ package io.codelex.flightplanner.repository;
 import io.codelex.flightplanner.dtos.FlightDTO;
 import org.springframework.stereotype.Repository;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.LinkedList;
+import java.util.List;
 
 @Repository
 public class FlightRepositoryInMemoryImpl {
 
-    private final HashSet<FlightDTO> flights;
+    private final LinkedList<FlightDTO> flights;
 
     public FlightRepositoryInMemoryImpl() {
-        this.flights = new HashSet<>();
+        this.flights = new LinkedList<>();
     }
 
-    public HashSet<FlightDTO> getFlights() {
+    public List<FlightDTO> getFlights() {
         return this.flights;
     }
 
@@ -24,15 +24,16 @@ public class FlightRepositoryInMemoryImpl {
     }
 
     public boolean add(FlightDTO flight) {
-        return this.flights.add(flight);
+        synchronized (flights) {
+            return this.flights.add(flight);
+        }
     }
 
-    public synchronized void deleteById(String id) {
-        Set<FlightDTO> flightsCopy = new HashSet<>(flights);
-        FlightDTO flightDTO = flightsCopy.stream()
-                .filter(flight -> flight.getId().equals(id))
-                .findFirst()
-                .orElse(null);
-        flights.remove(flightDTO);
+    public void deleteFlight(FlightDTO flight) {
+        if (flight != null) {
+            synchronized (flights) {
+                flights.remove(flight);
+            }
+        }
     }
 }

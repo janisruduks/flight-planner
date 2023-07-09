@@ -38,9 +38,10 @@ public class FlightServiceMemory {
 
     public void addFlight(FlightDTO flight) {
         validateAirports(flight.getFrom(), flight.getTo());
-        if (!flightRepository.add(flight)) {
+        if (flightRepository.getFlights().contains(flight)) {
             throw new DuplicateEntryException();
         }
+        flightRepository.add(flight);
     }
 
     public <T> void validateAirports(T airportFrom, T airportTo) {
@@ -50,7 +51,14 @@ public class FlightServiceMemory {
     }
 
     public void deleteFlightById(String id) {
-        flightRepository.deleteById(id);
+        FlightDTO flightToRemove;
+        synchronized (flightRepository.getFlights()) {
+            flightToRemove = flightRepository.getFlights().stream()
+                    .filter(flight -> flight.getId().equals(id))
+                    .findFirst()
+                    .orElse(null);
+            flightRepository.deleteFlight(flightToRemove);
+        }
     }
 
     public FlightDTO getFlightById(String id) {
