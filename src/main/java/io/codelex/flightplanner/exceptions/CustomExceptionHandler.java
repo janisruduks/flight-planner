@@ -16,17 +16,17 @@ public class CustomExceptionHandler {
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ErrorResponse> handleException(MethodArgumentNotValidException reason) {
         String errorMessage = Objects.requireNonNull(reason.getBindingResult().getFieldError()).getDefaultMessage();
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorResponse(errorMessage));
+        return ResponseEntity.badRequest().body(new ErrorResponse(errorMessage));
     }
 
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public ResponseEntity<ErrorResponse> handleHttpMessageNotReadableException() {
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorResponse("Invalid JSON"));
+        return ResponseEntity.badRequest().body(new ErrorResponse("Invalid JSON"));
     }
 
     @ExceptionHandler({EqualAirportsException.class, AirportTimeMismatchException.class})
     public ResponseEntity<ErrorResponse> handleBadRequestExceptions(RuntimeException reason) {
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorResponse(reason.getMessage()));
+        return ResponseEntity.badRequest().body(new ErrorResponse(reason.getMessage()));
     }
 
     @ExceptionHandler(FlightNotFoundByIdException.class)

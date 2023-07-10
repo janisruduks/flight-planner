@@ -1,13 +1,17 @@
 package io.codelex.flightplanner.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
 public class Flight {
 
+    private String id;
     @NotNull(message = "Airport from cannot be null")
     @Valid
     private Airport from;
@@ -21,12 +25,22 @@ public class Flight {
     @NotBlank(message = "Arrival time is mandatory")
     private String arrivalTime;
 
+    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+
     public Flight(Airport from, Airport to, String carrier, String departureTime, String arrivalTime) {
         this.from = from;
         this.to = to;
         this.carrier = carrier;
         this.departureTime = departureTime;
         this.arrivalTime = arrivalTime;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public Airport getFrom() {
@@ -53,16 +67,18 @@ public class Flight {
         this.carrier = carrier;
     }
 
-    public String getDepartureTime() {
-        return departureTime;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
+    public LocalDateTime getDepartureTime() {
+        return LocalDateTime.parse(departureTime, formatter);
     }
 
     public void setDepartureTime(String departureTime) {
         this.departureTime = departureTime;
     }
 
-    public String getArrivalTime() {
-        return arrivalTime;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
+    public LocalDateTime getArrivalTime() {
+        return LocalDateTime.parse(arrivalTime, formatter);
     }
 
     public void setArrivalTime(String arrivalTime) {

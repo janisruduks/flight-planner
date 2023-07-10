@@ -1,10 +1,10 @@
 package io.codelex.flightplanner.controllers;
 
-import io.codelex.flightplanner.dtos.AirportDTO;
-import io.codelex.flightplanner.dtos.FlightDTO;
+import io.codelex.flightplanner.domain.Airport;
+import io.codelex.flightplanner.domain.Flight;
 import io.codelex.flightplanner.dtos.FlightSearchDTO;
 import io.codelex.flightplanner.responses.FlightSearchResponse;
-import io.codelex.flightplanner.services.FlightServiceMemory;
+import io.codelex.flightplanner.services.FlightService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,26 +18,25 @@ import java.util.List;
 @Validated
 public class ApiController {
 
-    private final FlightServiceMemory flightService;
+    private final FlightService flightService;
 
-    public ApiController(FlightServiceMemory flightService) {
+    public ApiController(FlightService flightService) {
         this.flightService = flightService;
     }
 
     @PostMapping("/flights/search")
     public ResponseEntity<FlightSearchResponse> searchForFlight(@Valid @RequestBody FlightSearchDTO flightSearchDTO) {
-        FlightSearchResponse response = flightService.searchForFlight(flightSearchDTO);
-        return ResponseEntity.status(HttpStatus.OK).body(response);
+        return ResponseEntity.ok(flightService.searchForFlight(flightSearchDTO));
     }
 
     @GetMapping("/flights/{id}")
-    public ResponseEntity<FlightDTO> getFlightById(@PathVariable String id) {
-        return ResponseEntity.status(HttpStatus.OK).body(flightService.getFlightById(id));
+    public ResponseEntity<Flight> getFlightById(@PathVariable String id) {
+        return ResponseEntity.ok(flightService.getFlightById(id));
     }
 
     @GetMapping("/airports")
     @ResponseStatus(HttpStatus.OK)
-    public List<AirportDTO> searchByParameters(@RequestParam String search) {
-        return flightService.getFilteredMatchList(search.trim().toLowerCase());
+    public ResponseEntity<List<Airport>> searchByParameters(@RequestParam String search) {
+        return ResponseEntity.ok(flightService.getFilteredMatchList(search.trim().toLowerCase()));
     }
 }
