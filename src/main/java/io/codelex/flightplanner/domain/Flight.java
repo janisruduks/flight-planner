@@ -11,6 +11,7 @@ import java.util.Objects;
 
 public class Flight {
 
+    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
     private String id;
     @NotNull(message = "Airport from cannot be null")
     @Valid
@@ -24,8 +25,6 @@ public class Flight {
     private String departureTime;
     @NotBlank(message = "Arrival time is mandatory")
     private String arrivalTime;
-
-    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
     public Flight(Airport from, Airport to, String carrier, String departureTime, String arrivalTime) {
         this.from = from;
