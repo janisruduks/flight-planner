@@ -27,13 +27,13 @@ public class AdminApiController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<ValidResponse> deleteFlight(@PathVariable String id) {
-            this.flightService.deleteFlightById(id);
-            return ResponseEntity.ok(new ValidResponse("Flight deleted successfully"));
+        this.flightService.deleteFlightById(id);
+        return ResponseEntity.ok(new ValidResponse("Flight deleted successfully"));
     }
 
     @PutMapping()
     public ResponseEntity<Flight> addFlight(@Valid @RequestBody Flight flight) {
-            this.flightService.addFlight(flight);
-            return ResponseEntity.status(HttpStatus.CREATED).body(flight);
+        this.flightService.addFlight(flight);
+        return ResponseEntity.status(HttpStatus.CREATED).body(flight);
     }
 }
