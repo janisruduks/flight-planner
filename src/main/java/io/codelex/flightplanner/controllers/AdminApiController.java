@@ -1,10 +1,8 @@
 package io.codelex.flightplanner.controllers;
 
 import io.codelex.flightplanner.domain.Flight;
-import io.codelex.flightplanner.dtos.FlightDTO;
-import io.codelex.flightplanner.mappers.FlightMapper;
 import io.codelex.flightplanner.responses.ValidResponse;
-import io.codelex.flightplanner.services.FlightServiceMemory;
+import io.codelex.flightplanner.services.FlightService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,17 +14,15 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/admin-api/flights")
 public class AdminApiController {
 
-    private final FlightServiceMemory flightService;
-    private final FlightMapper mapper;
+    private final FlightService flightService;
 
-    public AdminApiController(FlightServiceMemory flightService, FlightMapper mapper) {
+    public AdminApiController(FlightService flightService) {
         this.flightService = flightService;
-        this.mapper = mapper;
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<FlightDTO> getFlightById(@PathVariable String id) {
-        return ResponseEntity.status(HttpStatus.OK).body(flightService.getFlightById(id));
+    public ResponseEntity<Flight> getFlightById(@PathVariable String id) {
+        return ResponseEntity.ok(flightService.getFlightById(id));
     }
 
     @DeleteMapping("/{id}")
@@ -36,9 +32,8 @@ public class AdminApiController {
     }
 
     @PutMapping()
-    public ResponseEntity<FlightDTO> addFlight(@Valid @RequestBody Flight flight) {
-            FlightDTO flightDTO = mapper.toDTO(flight);
-            this.flightService.addFlight(flightDTO);
-            return ResponseEntity.status(HttpStatus.CREATED).body(flightDTO);
+    public ResponseEntity<Flight> addFlight(@Valid @RequestBody Flight flight) {
+            this.flightService.addFlight(flight);
+            return ResponseEntity.status(HttpStatus.CREATED).body(flight);
     }
 }

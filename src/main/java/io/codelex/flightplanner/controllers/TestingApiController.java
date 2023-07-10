@@ -1,6 +1,6 @@
 package io.codelex.flightplanner.controllers;
 
-import io.codelex.flightplanner.services.FlightServiceMemory;
+import io.codelex.flightplanner.services.FlightService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -10,9 +10,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/testing-api")
 public class TestingApiController {
 
-    private final FlightServiceMemory flightService;
+    private final FlightService flightService;
 
-    public TestingApiController(FlightServiceMemory flightService) {
+    public TestingApiController(FlightService flightService) {
         this.flightService = flightService;
     }
 

@@ -1,21 +1,21 @@
 package io.codelex.flightplanner.repository;
 
-import io.codelex.flightplanner.dtos.FlightDTO;
+import io.codelex.flightplanner.domain.Flight;
 import org.springframework.stereotype.Repository;
 
 import java.util.LinkedList;
 import java.util.List;
 
 @Repository
-public class FlightRepositoryInMemoryImpl {
+public class FlightRepository {
 
-    private final LinkedList<FlightDTO> flights;
+    private final LinkedList<Flight> flights;
 
-    public FlightRepositoryInMemoryImpl() {
+    public FlightRepository() {
         this.flights = new LinkedList<>();
     }
 
-    public List<FlightDTO> getFlights() {
+    public List<Flight> getFlights() {
         return this.flights;
     }
 
@@ -23,13 +23,13 @@ public class FlightRepositoryInMemoryImpl {
         this.flights.clear();
     }
 
-    public boolean add(FlightDTO flight) {
+    public boolean add(Flight flight) {
         synchronized (flights) {
             return this.flights.add(flight);
         }
     }
 
-    public void deleteFlight(FlightDTO flight) {
+    public void deleteFlight(Flight flight) {
         if (flight != null) {
             synchronized (flights) {
                 flights.remove(flight);
