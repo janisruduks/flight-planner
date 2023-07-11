@@ -30,10 +30,8 @@ public class FlightRepository {
     }
 
     public void deleteFlight(Flight flight) {
-        if (flight != null) {
-            synchronized (flights) {
-                flights.remove(flight);
-            }
+        synchronized (flights) {
+            flights.remove(flight);
         }
     }
 }
