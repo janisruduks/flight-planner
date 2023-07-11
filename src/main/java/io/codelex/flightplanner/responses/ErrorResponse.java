@@ -1,4 +1,3 @@
 package io.codelex.flightplanner.responses;
 
-public record ErrorResponse(String message) {
-}
+public record ErrorResponse(String message) { }
