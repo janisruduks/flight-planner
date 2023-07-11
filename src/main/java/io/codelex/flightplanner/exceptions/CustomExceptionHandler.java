@@ -24,7 +24,7 @@ public class CustomExceptionHandler {
         return ResponseEntity.badRequest().body(new ErrorResponse("Invalid JSON"));
     }
 
-    @ExceptionHandler({EqualAirportsException.class, AirportTimeMismatchException.class})
+    @ExceptionHandler({EqualAirportsException.class, AirportDateMismatchException.class})
     public ResponseEntity<ErrorResponse> handleBadRequestExceptions(RuntimeException reason) {
         return ResponseEntity.badRequest().body(new ErrorResponse(reason.getMessage()));
     }

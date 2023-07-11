@@ -14,12 +14,6 @@ public class FlightSearchDTO {
     @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate departureDate;
 
-    public FlightSearchDTO(String from, String to, LocalDate baseDate) {
-        this.from = from;
-        this.to = to;
-        this.departureDate = baseDate;
-    }
-
     public String getFrom() {
         return from;
     }
