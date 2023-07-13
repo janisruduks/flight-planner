@@ -6,7 +6,6 @@ import io.codelex.flightplanner.dtos.FlightSearchDTO;
 import io.codelex.flightplanner.responses.FlightSearchResponse;
 import io.codelex.flightplanner.services.FlightService;
 import jakarta.validation.Valid;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -35,8 +34,7 @@ public class ApiController {
     }
 
     @GetMapping("/airports")
-    @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<List<Airport>> searchByParameters(@RequestParam String search) {
-        return ResponseEntity.ok(flightService.getFilteredMatchList(search.trim().toLowerCase()));
+        return ResponseEntity.ok(flightService.getFilteredMatchList(search));
     }
 }

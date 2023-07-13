@@ -78,11 +78,12 @@ public class FlightService {
     }
 
     public List<Airport> getFilteredMatchList(String match) {
+        String lowerCaseTrimmedMatch = match.toLowerCase().trim();
         return flightRepository.getFlights().stream()
                 .map(Flight::getFrom)
-                .filter(from -> from.getAirport().toLowerCase().contains(match)
-                        || from.getCity().toLowerCase().contains(match)
-                        || from.getCountry().toLowerCase().contains(match)
+                .filter(from -> from.getAirport().toLowerCase().contains(lowerCaseTrimmedMatch)
+                        || from.getCity().toLowerCase().contains(lowerCaseTrimmedMatch)
+                        || from.getCountry().toLowerCase().contains(lowerCaseTrimmedMatch)
                 )
                 .map(from -> new Airport(from.getCountry(), from.getCity(), from.getAirport()))
                 .toList();
