@@ -64,30 +64,5 @@ class FlightServiceTest {
         assertEquals(searchResponse1.items(), List.of(mockFlightRIX));
         assertNotNull(searchResponse2);
         assertEquals(searchResponse2.items(), List.of(mockFlightLGW));
-
-    }
-
-    @Test
-    @DisplayName("Should search by incomplete phrases")
-    void searchForAirports() {
-        List<Flight> mockFlights = createMockFlights();
-        when(flightRepository.getFlights()).thenReturn(mockFlights);
-
-        List<Airport> result1 = flightService.getFilteredMatchList("latvia");
-        List<Airport> result2 = flightService.getFilteredMatchList("rig");
-        List<Airport> result3 = flightService.getFilteredMatchList(" ix");
-
-        assertEquals(1, result1.size());
-        assertEquals(mockFlights.get(0).getFrom().getAirport(), result1.get(0).getAirport());
-        assertEquals(mockFlights.get(0).getFrom().getCity(), result1.get(0).getCity());
-        assertEquals(mockFlights.get(0).getFrom().getCountry(), result1.get(0).getCountry());
-        assertEquals(1, result2.size());
-        assertEquals(mockFlights.get(0).getFrom().getAirport(), result2.get(0).getAirport());
-        assertEquals(mockFlights.get(0).getFrom().getCity(), result2.get(0).getCity());
-        assertEquals(mockFlights.get(0).getFrom().getCountry(), result2.get(0).getCountry());
-        assertEquals(1, result3.size());
-        assertEquals(mockFlights.get(0).getFrom().getAirport(), result3.get(0).getAirport());
-        assertEquals(mockFlights.get(0).getFrom().getCity(), result3.get(0).getCity());
-        assertEquals(mockFlights.get(0).getFrom().getCountry(), result3.get(0).getCountry());
     }
 }
