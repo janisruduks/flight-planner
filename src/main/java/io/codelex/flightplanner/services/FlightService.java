@@ -48,7 +48,7 @@ public class FlightService {
     }
 
 
-    public <T> void validateAirports(T airportFrom, T airportTo) {
+    public void validateAirports(Object airportFrom, Object airportTo) {
         if (airportTo.equals(airportFrom)) {
             throw new EqualAirportsException();
         }
