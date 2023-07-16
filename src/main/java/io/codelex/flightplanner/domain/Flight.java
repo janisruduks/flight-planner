@@ -6,7 +6,6 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
 public class Flight {
@@ -20,13 +19,22 @@ public class Flight {
     private Airport to;
     @NotBlank(message = "Airline name is mandatory")
     private String carrier;
-    @NotBlank(message = "Departure time is mandatory")
-    private String departureTime;
-    @NotBlank(message = "Arrival time is mandatory")
-    private String arrivalTime;
-    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
+    @NotNull(message = "Departure time cannot be null")
+    private LocalDateTime departureTime;
+    @NotNull(message = "Arrival time cannot be null")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
+    private LocalDateTime arrivalTime;
 
-    public Flight(Airport from, Airport to, String carrier, String departureTime, String arrivalTime) {
+    public Flight(
+            Airport from,
+            Airport to,
+            String carrier,
+            @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
+            LocalDateTime departureTime,
+            @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
+            LocalDateTime arrivalTime
+    ) {
         this.from = from;
         this.to = to;
         this.carrier = carrier;
@@ -66,21 +74,19 @@ public class Flight {
         this.carrier = carrier;
     }
 
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
     public LocalDateTime getDepartureTime() {
-        return LocalDateTime.parse(departureTime, formatter);
+        return departureTime;
     }
 
-    public void setDepartureTime(String departureTime) {
+    public void setDepartureTime(LocalDateTime departureTime) {
         this.departureTime = departureTime;
     }
 
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
     public LocalDateTime getArrivalTime() {
-        return LocalDateTime.parse(arrivalTime, formatter);
+        return arrivalTime;
     }
 
-    public void setArrivalTime(String arrivalTime) {
+    public void setArrivalTime(LocalDateTime arrivalTime) {
         this.arrivalTime = arrivalTime;
     }
 
