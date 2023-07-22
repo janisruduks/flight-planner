@@ -6,7 +6,6 @@ import io.codelex.flightplanner.dtos.FlightSearchDTO;
 import io.codelex.flightplanner.responses.FlightSearchResponse;
 import io.codelex.flightplanner.services.FlightService;
 import jakarta.validation.Valid;
-import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
