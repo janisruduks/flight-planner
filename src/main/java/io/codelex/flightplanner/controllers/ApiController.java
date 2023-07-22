@@ -24,17 +24,17 @@ public class ApiController {
     }
 
     @PostMapping("/flights/search")
-    public ResponseEntity<FlightSearchResponse> searchForFlight(@Valid @RequestBody FlightSearchDTO flightSearchDTO) {
-        return ResponseEntity.ok(flightService.searchForFlight(flightSearchDTO));
+    public FlightSearchResponse searchForFlight(@Valid @RequestBody FlightSearchDTO flightSearchDTO) {
+        return flightService.searchForFlight(flightSearchDTO);
     }
 
     @GetMapping("/flights/{id}")
-    public ResponseEntity<Flight> getFlightById(@PathVariable String id) {
-        return ResponseEntity.ok(flightService.getFlightById(id));
+    public Flight getFlightById(@PathVariable String id) {
+        return flightService.getFlightById(id);
     }
 
     @GetMapping("/airports")
-    public ResponseEntity<List<Airport>> searchByParameters(@RequestParam String search) {
-        return ResponseEntity.ok(flightService.getFilteredMatchList(search));
+    public List<Airport> searchByParameters(@RequestParam String search) {
+        return flightService.getFilteredMatchList(search);
     }
 }
