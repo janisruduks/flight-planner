@@ -21,14 +21,14 @@ public class AdminApiController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Flight> getFlightById(@PathVariable String id) {
-        return ResponseEntity.ok(flightService.getFlightById(id));
+    public Flight getFlightById(@PathVariable String id) {
+        return flightService.getFlightById(id);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<ValidResponse> deleteFlight(@PathVariable String id) {
+    public ValidResponse deleteFlight(@PathVariable String id) {
         this.flightService.deleteFlightById(id);
-        return ResponseEntity.ok(new ValidResponse("Flight deleted successfully"));
+        return new ValidResponse("Flight deleted successfully");
     }
 
     @PutMapping()
