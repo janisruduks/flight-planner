@@ -1,28 +1,18 @@
 package io.codelex.flightplanner.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
 
 public class Flight {
 
-    private String id;
-    @NotNull(message = "Airport from cannot be null")
-    @Valid
+    private Long id;
     private Airport from;
-    @NotNull(message = "Airport to cannot be null")
-    @Valid
     private Airport to;
-    @NotBlank(message = "Airline name is mandatory")
     private String carrier;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
-    @NotNull(message = "Departure time cannot be null")
     private LocalDateTime departureTime;
-    @NotNull(message = "Arrival time cannot be null")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
     private LocalDateTime arrivalTime;
 
@@ -42,11 +32,11 @@ public class Flight {
         this.arrivalTime = arrivalTime;
     }
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

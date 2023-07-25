@@ -2,7 +2,7 @@ package io.codelex.flightplanner.controllers;
 
 import io.codelex.flightplanner.domain.Airport;
 import io.codelex.flightplanner.domain.Flight;
-import io.codelex.flightplanner.dtos.FlightSearchDTO;
+import io.codelex.flightplanner.dto.FlightSearchDTO;
 import io.codelex.flightplanner.responses.FlightSearchResponse;
 import io.codelex.flightplanner.services.FlightService;
 import jakarta.validation.Valid;
@@ -28,7 +28,7 @@ public class ApiController {
     }
 
     @GetMapping("/flights/{id}")
-    public Flight getFlightById(@PathVariable String id) {
+    public Flight getFlightById(@PathVariable Long id) {
         return flightService.getFlightById(id);
     }
 
