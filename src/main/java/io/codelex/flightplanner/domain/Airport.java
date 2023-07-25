@@ -23,7 +23,7 @@ public class Airport {
         return country;
     }
 
-    public void setCountry(@NotBlank String country) {
+    public void setCountry(String country) {
         this.country = country;
     }
 
@@ -31,7 +31,7 @@ public class Airport {
         return city;
     }
 
-    public void setCity(@NotBlank String city) {
+    public void setCity(String city) {
         this.city = city;
     }
 
@@ -39,7 +39,7 @@ public class Airport {
         return airport;
     }
 
-    public void setAirport(@NotBlank String airport) {
+    public void setAirport(String airport) {
         this.airport = airport;
     }
 

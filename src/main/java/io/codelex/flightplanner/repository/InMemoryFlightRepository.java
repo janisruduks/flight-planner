@@ -7,15 +7,15 @@ import java.util.LinkedList;
 import java.util.List;
 
 @Repository
-public class FlightRepository {
+public class InMemoryFlightRepository {
 
     private final LinkedList<Flight> flights;
 
-    public FlightRepository() {
+    public InMemoryFlightRepository() {
         this.flights = new LinkedList<>();
     }
 
-    public List<Flight> getFlights() {
+    public synchronized List<Flight> getFlights() {
         return this.flights;
     }
 
@@ -23,15 +23,11 @@ public class FlightRepository {
         this.flights.clear();
     }
 
-    public boolean add(Flight flight) {
-        synchronized (flights) {
-            return this.flights.add(flight);
-        }
+    public synchronized boolean add(Flight flight) {
+        return this.flights.add(flight);
     }
 
-    public void deleteFlight(Flight flight) {
-        synchronized (flights) {
-            flights.remove(flight);
-        }
+    public synchronized void deleteFlight(Flight flight) {
+        flights.remove(flight);
     }
 }
