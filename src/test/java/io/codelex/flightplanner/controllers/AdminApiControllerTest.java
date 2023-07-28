@@ -1,8 +1,8 @@
 package io.codelex.flightplanner.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.codelex.flightplanner.domain.Airport;
-import io.codelex.flightplanner.domain.Flight;
+import io.codelex.flightplanner.entity.Airport;
+import io.codelex.flightplanner.entity.Flight;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -14,6 +14,9 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
+
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
@@ -35,6 +38,7 @@ class AdminApiControllerTest {
     private String username;
     @Value("${spring.security.user.password}")
     private String password;
+    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
     @BeforeEach
     public void clearFlights() {
@@ -95,7 +99,7 @@ class AdminApiControllerTest {
     @DisplayName("Should fail on strange dates")
     public void shouldFailOnStrangeDates() throws Exception {
         Flight mockFlight = createflight();
-        mockFlight.setArrivalTime("1900-01-01 00:00");
+        mockFlight.setArrivalTime(LocalDateTime.parse("1900-01-01 00:00", formatter));
         jsonObjectMapper.findAndRegisterModules();
 
         MockHttpServletRequestBuilder requestBuilder = requestBuilder(mockFlight);
@@ -110,8 +114,9 @@ class AdminApiControllerTest {
                 airportFrom,
                 airportTo,
                 "AirBaltic",
-                "2023-07-13 06:07",
-                "2023-07-16 12:04");
+                LocalDateTime.parse("2023-07-13 06:07", formatter) ,
+                LocalDateTime.parse("2023-07-16 12:04", formatter)
+        );
     }
 
     private MockHttpServletRequestBuilder requestBuilder(Flight mockFlight) throws Exception {
