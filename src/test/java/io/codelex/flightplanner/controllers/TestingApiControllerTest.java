@@ -1,7 +1,7 @@
 package io.codelex.flightplanner.controllers;
 
-import io.codelex.flightplanner.domain.Airport;
-import io.codelex.flightplanner.domain.Flight;
+import io.codelex.flightplanner.entity.Airport;
+import io.codelex.flightplanner.entity.Flight;
 import io.codelex.flightplanner.repository.InMemoryFlightRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -14,6 +14,7 @@ import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilde
 
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -30,13 +31,15 @@ class TestingApiControllerTest {
     @Autowired
     private MockMvc mvc;
 
+    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+
     @Test
     @DisplayName("Should clean repository fully")
     void clear() throws Exception {
         Airport airportFrom = new Airport("LV", "Riga", "Rix");
         Airport airportTo = new Airport("IT", "Milan", "BGY");
-        LocalDateTime departureTime = LocalDateTime.of("2023-07-13 06:07");
-        String arrivalTime = "2023-07-16 12:04";
+        LocalDateTime departureTime = LocalDateTime.parse("2023-07-13 06:07", formatter);
+        LocalDateTime arrivalTime = LocalDateTime.parse("2023-07-16 12:04", formatter);
         Flight flight = new Flight(airportFrom, airportTo, "AirBaltic", departureTime, arrivalTime);
         Integer flightCountBefore = flightRepository.getFlights().size();
         flightRepository.add(flight);
