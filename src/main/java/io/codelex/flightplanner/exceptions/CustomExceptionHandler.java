@@ -1,6 +1,6 @@
 package io.codelex.flightplanner.exceptions;
 
-import io.codelex.flightplanner.responses.ErrorResponse;
+import io.codelex.flightplanner.response.ErrorResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;

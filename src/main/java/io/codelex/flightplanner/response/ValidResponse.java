@@ -1,3 +1,3 @@
-package io.codelex.flightplanner.responses;
+package io.codelex.flightplanner.response;
 
 public record ValidResponse(Object data) { }

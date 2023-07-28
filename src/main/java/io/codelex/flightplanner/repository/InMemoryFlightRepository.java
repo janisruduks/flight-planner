@@ -1,6 +1,6 @@
 package io.codelex.flightplanner.repository;
 
-import io.codelex.flightplanner.domain.Flight;
+import io.codelex.flightplanner.entity.Flight;
 import org.springframework.stereotype.Repository;
 
 import java.util.LinkedList;

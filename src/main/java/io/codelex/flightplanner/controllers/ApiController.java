@@ -1,9 +1,9 @@
 package io.codelex.flightplanner.controllers;
 
-import io.codelex.flightplanner.domain.Airport;
-import io.codelex.flightplanner.domain.Flight;
 import io.codelex.flightplanner.dto.FlightSearchDTO;
-import io.codelex.flightplanner.responses.FlightSearchResponse;
+import io.codelex.flightplanner.entity.Airport;
+import io.codelex.flightplanner.entity.Flight;
+import io.codelex.flightplanner.response.FlightSearchResponse;
 import io.codelex.flightplanner.services.FlightService;
 import jakarta.validation.Valid;
 import org.springframework.validation.annotation.Validated;
