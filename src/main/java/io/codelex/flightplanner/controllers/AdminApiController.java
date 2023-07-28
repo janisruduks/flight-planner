@@ -1,8 +1,7 @@
 package io.codelex.flightplanner.controllers;
 
-import io.codelex.flightplanner.domain.Flight;
-import io.codelex.flightplanner.dto.FlightDTO;
-import io.codelex.flightplanner.responses.ValidResponse;
+import io.codelex.flightplanner.entity.Flight;
+import io.codelex.flightplanner.response.ValidResponse;
 import io.codelex.flightplanner.services.FlightService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -33,7 +32,7 @@ public class AdminApiController {
 
     @PutMapping()
     @ResponseStatus(HttpStatus.CREATED)
-    public Flight addFlight(@Valid @RequestBody FlightDTO flight) {
+    public Flight addFlight(@Valid @RequestBody Flight flight) {
         return this.flightService.addFlight(flight);
     }
 }

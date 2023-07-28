@@ -1,11 +1,19 @@
-package io.codelex.flightplanner.domain;
+package io.codelex.flightplanner.entity;
 
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import org.springframework.stereotype.Component;
 
 import java.util.Objects;
 
+@Component
+@Entity
+@Table(name = "airport")
 public class Airport {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     @NotBlank(message = "Country is mandatory")
     private String country;
     @NotBlank(message = "City is mandatory")
@@ -13,10 +21,17 @@ public class Airport {
     @NotBlank(message = "Airport location identifier is mandatory")
     private String airport;
 
+    public Airport() {
+    }
+
     public Airport(String country, String city, String airport) {
         this.country = country;
         this.city = city;
         this.airport = airport;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getCountry() {

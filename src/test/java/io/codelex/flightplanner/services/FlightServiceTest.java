@@ -3,7 +3,7 @@ package io.codelex.flightplanner.services;
 import io.codelex.flightplanner.domain.Airport;
 import io.codelex.flightplanner.domain.Flight;
 import io.codelex.flightplanner.dto.FlightSearchDTO;
-import io.codelex.flightplanner.responses.FlightSearchResponse;
+import io.codelex.flightplanner.response.FlightSearchResponse;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

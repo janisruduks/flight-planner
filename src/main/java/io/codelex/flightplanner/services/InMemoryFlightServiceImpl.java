@@ -1,16 +1,14 @@
 package io.codelex.flightplanner.services;
 
-import io.codelex.flightplanner.domain.Airport;
-import io.codelex.flightplanner.domain.Flight;
-import io.codelex.flightplanner.dto.FlightDTO;
 import io.codelex.flightplanner.dto.FlightSearchDTO;
+import io.codelex.flightplanner.entity.Airport;
+import io.codelex.flightplanner.entity.Flight;
 import io.codelex.flightplanner.exceptions.AirportDateMismatchException;
 import io.codelex.flightplanner.exceptions.DuplicateEntryException;
 import io.codelex.flightplanner.exceptions.EqualAirportsException;
 import io.codelex.flightplanner.exceptions.FlightNotFoundByIdException;
-import io.codelex.flightplanner.mapper.InMemoryFlightMapper;
 import io.codelex.flightplanner.repository.InMemoryFlightRepository;
-import io.codelex.flightplanner.responses.FlightSearchResponse;
+import io.codelex.flightplanner.response.FlightSearchResponse;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -24,8 +22,7 @@ public class InMemoryFlightServiceImpl implements FlightService {
     }
 
     @Override
-    public Flight addFlight(FlightDTO dto) {
-        Flight flight = InMemoryFlightMapper.fromDTO(dto);
+    public Flight addFlight(Flight flight) {
         validateAirportsAndDates(flight);
         flight.setId(generateId(1L));
         if (repository.getFlights().contains(flight)) {
@@ -54,9 +51,9 @@ public class InMemoryFlightServiceImpl implements FlightService {
     }
 
     @Override
-    public FlightSearchResponse searchForFlight(FlightSearchDTO searchDTO) {
-        validateAirports(searchDTO.from(), searchDTO.to());
-        List<Flight> flights = searchForAirports(searchDTO.from(), searchDTO.to(), searchDTO.departureDate());
+    public FlightSearchResponse searchForFlight(FlightSearchDTO dto) {
+        validateAirports(dto.from(), dto.to());
+        List<Flight> flights = searchForAirports(dto.from(), dto.to(), dto.departureDate());
         return new FlightSearchResponse(flights, 0, flights.size());
     }
 
@@ -80,7 +77,8 @@ public class InMemoryFlightServiceImpl implements FlightService {
     public synchronized void deleteFlightById(Long id) {
         try {
             repository.deleteFlight(getFlightById(id));
-        } catch (FlightNotFoundByIdException ignored) { }
+        } catch (FlightNotFoundByIdException ignored) {
+        }
     }
 
     @Override
