@@ -1,4 +1,4 @@
-package io.codelex.flightplanner.exceptions;
+package io.codelex.flightplanner.exception;
 
 public class DuplicateEntryException extends RuntimeException {
     public DuplicateEntryException() {

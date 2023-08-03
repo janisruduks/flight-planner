@@ -1,4 +1,4 @@
-package io.codelex.flightplanner.exceptions;
+package io.codelex.flightplanner.exception;
 
 public class EqualAirportsException extends RuntimeException {
     public EqualAirportsException() {

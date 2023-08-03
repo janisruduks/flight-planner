@@ -1,4 +1,4 @@
-package io.codelex.flightplanner.controllers;
+package io.codelex.flightplanner.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.codelex.flightplanner.entity.Airport;

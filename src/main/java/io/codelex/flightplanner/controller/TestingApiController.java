@@ -1,4 +1,4 @@
-package io.codelex.flightplanner.controllers;
+package io.codelex.flightplanner.controller;
 
 import io.codelex.flightplanner.services.FlightService;
 import org.springframework.web.bind.annotation.PostMapping;

@@ -3,10 +3,10 @@ package io.codelex.flightplanner.services;
 import io.codelex.flightplanner.entity.Airport;
 import io.codelex.flightplanner.entity.Flight;
 import io.codelex.flightplanner.dto.FlightSearchDTO;
-import io.codelex.flightplanner.exceptions.AirportDateMismatchException;
-import io.codelex.flightplanner.exceptions.DuplicateEntryException;
-import io.codelex.flightplanner.exceptions.EqualAirportsException;
-import io.codelex.flightplanner.exceptions.FlightNotFoundByIdException;
+import io.codelex.flightplanner.exception.AirportDateMismatchException;
+import io.codelex.flightplanner.exception.DuplicateEntryException;
+import io.codelex.flightplanner.exception.EqualAirportsException;
+import io.codelex.flightplanner.exception.FlightNotFoundByIdException;
 import io.codelex.flightplanner.repository.DatabaseAirportRepository;
 import io.codelex.flightplanner.repository.DatabaseFlightRepository;
 import io.codelex.flightplanner.response.FlightSearchResponse;
@@ -97,9 +97,8 @@ public class DatabaseFlightServiceImpl implements FlightService {
     @Override
     public List<Airport> getFilteredMatchList(String match) {
         String formattedMatch = match.toLowerCase().trim();
-        return flightRepository.findAllByFrom_AirportIgnoreCaseContainingOrFrom_CityIgnoreCaseContainingOrFrom_CountryIgnoreCaseContaining(
-                        formattedMatch, formattedMatch, formattedMatch
-                ).stream()
+        return flightRepository.queryForFlights(formattedMatch, formattedMatch, formattedMatch)
+                .stream()
                 .map(Flight::getFrom)
                 .toList();
     }

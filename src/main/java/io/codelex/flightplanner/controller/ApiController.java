@@ -1,4 +1,4 @@
-package io.codelex.flightplanner.controllers;
+package io.codelex.flightplanner.controller;
 
 import io.codelex.flightplanner.dto.FlightSearchDTO;
 import io.codelex.flightplanner.entity.Airport;
