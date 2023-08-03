@@ -1,4 +1,4 @@
-package io.codelex.flightplanner.controllers;
+package io.codelex.flightplanner.controller;
 
 import io.codelex.flightplanner.entity.Flight;
 import io.codelex.flightplanner.response.ValidResponse;

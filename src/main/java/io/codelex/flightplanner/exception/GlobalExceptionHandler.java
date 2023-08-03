@@ -1,4 +1,4 @@
-package io.codelex.flightplanner.exceptions;
+package io.codelex.flightplanner.exception;
 
 import io.codelex.flightplanner.response.ErrorResponse;
 import org.springframework.http.HttpStatus;
@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import java.util.Objects;
 
 @ControllerAdvice
-public class CustomExceptionHandler {
+public class GlobalExceptionHandler {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ErrorResponse> handleException(MethodArgumentNotValidException reason) {

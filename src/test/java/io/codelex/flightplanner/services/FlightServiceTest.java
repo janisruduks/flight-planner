@@ -52,7 +52,6 @@ class FlightServiceTest {
                 LocalDateTime.parse("2023-07-13 06:07", formatter),
                LocalDateTime.parse("2023-07-16 12:04", formatter)
         );
-
         return List.of(flight1, flight2);
     }
 

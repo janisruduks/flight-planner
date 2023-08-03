@@ -3,10 +3,10 @@ package io.codelex.flightplanner.services;
 import io.codelex.flightplanner.dto.FlightSearchDTO;
 import io.codelex.flightplanner.entity.Airport;
 import io.codelex.flightplanner.entity.Flight;
-import io.codelex.flightplanner.exceptions.AirportDateMismatchException;
-import io.codelex.flightplanner.exceptions.DuplicateEntryException;
-import io.codelex.flightplanner.exceptions.EqualAirportsException;
-import io.codelex.flightplanner.exceptions.FlightNotFoundByIdException;
+import io.codelex.flightplanner.exception.AirportDateMismatchException;
+import io.codelex.flightplanner.exception.DuplicateEntryException;
+import io.codelex.flightplanner.exception.EqualAirportsException;
+import io.codelex.flightplanner.exception.FlightNotFoundByIdException;
 import io.codelex.flightplanner.repository.InMemoryFlightRepository;
 import io.codelex.flightplanner.response.FlightSearchResponse;
 
@@ -32,7 +32,7 @@ public class InMemoryFlightServiceImpl implements FlightService {
         return flight;
     }
 
-    private synchronized Long generateId(Long base) {
+    private Long generateId(Long base) {
         List<Flight> flights = repository.getFlights();
         Long id = flights.size() + base;
         if (flights.stream().anyMatch(flight -> flight.getId().equals(id))) {

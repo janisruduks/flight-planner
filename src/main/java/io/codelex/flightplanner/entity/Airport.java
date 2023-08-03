@@ -2,11 +2,9 @@ package io.codelex.flightplanner.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
-import org.springframework.stereotype.Component;
 
 import java.util.Objects;
 
-@Component
 @Entity
 @Table(name = "airport")
 public class Airport {
