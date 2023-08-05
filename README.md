@@ -67,7 +67,7 @@ flight-planner.store-type=in-memory
 #### Get flight by id
 
 ```http
-  GET /api/flights/${id}
+GET /api/flights/${id}
 ```
 
 | Parameter | Type     | Description                |
@@ -77,7 +77,7 @@ flight-planner.store-type=in-memory
 #### Search for airport
 
 ```http
-  GET /api/aiports
+GET /api/aiports
 ```
 Search for Airport that matches `search` param.
 Ignores casing and searches for incomplete phrases.
@@ -89,7 +89,7 @@ Ignores casing and searches for incomplete phrases.
 #### Search for flight
 
 ```http
-  POST /api/flights/search
+POST /api/flights/search
 ```
 
 Searches for flight matching `from` (Airport name), `to` (Airport name), `date` (Flight departure date) 
@@ -113,7 +113,7 @@ Password `Password123`
 #### Delete flight by id
 
 ```http
-  DELETE /admin-api/flights/${id}
+DELETE /admin-api/flights/${id}
 ```
 
 | Parameter | Type     | Description                |
@@ -123,7 +123,7 @@ Password `Password123`
 #### Get flight by id
 
 ```http
-  GET /admin-api/flights/${id}
+GET /admin-api/flights/${id}
 ```
 
 | Parameter | Type     | Description                |
@@ -133,7 +133,7 @@ Password `Password123`
 #### Create Flight
 
 ```http
-  PUT /admin-api/flights
+PUT /admin-api/flights
 ```
 [Flight Object](#flight-object)
 
@@ -150,7 +150,7 @@ Password `Password123`
 #### Clear all flights from either in-memory or postgresql
 
 ```http
-  POST /testing-api/flights/clear
+POST /testing-api/flights/clear
 ```
 
 # Entities
