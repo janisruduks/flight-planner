@@ -40,7 +40,7 @@ cd flight-planner
 cd src/main/resources/
 ```
 
-edit application.properties with IDE or run
+edit application.properties with text editor
 
 ```bash
 nano application.properties
@@ -135,7 +135,7 @@ GET /admin-api/flights/${id}
 ```http
 PUT /admin-api/flights
 ```
-[Flight Object](#flight-object)
+This references [Flight Object](#flight-object)
 
 | Parameter | Type     | Description                       |
 | :-------- | :------- | :-------------------------------- |
