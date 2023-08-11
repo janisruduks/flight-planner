@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 public interface DatabaseFlightRepository extends JpaRepository<Flight, Long> {
 
@@ -16,22 +17,11 @@ public interface DatabaseFlightRepository extends JpaRepository<Flight, Long> {
             String from, String to, LocalDate departure
     );
 
-    Flight findByFromAndToAndDepartureTimeAndArrivalTimeAndCarrier(
+    Optional<Flight> findByFromAndToAndDepartureTimeAndArrivalTimeAndCarrier(
             Airport from,
             Airport to,
             LocalDateTime departure,
             LocalDateTime arrival,
             String carrier
     );
-
-    @Query(value =
-            """
-                        select f
-                        from Flight f
-                        where lower(f.from.airport) like %:fromAirport%
-                        or lower(f.from.city) like %:fromCity%
-                        or lower(f.from.country) like %:fromCountry%
-            """
-    )
-    List<Flight> queryForFlights(String fromAirport, String fromCity, String fromCountry);
 }

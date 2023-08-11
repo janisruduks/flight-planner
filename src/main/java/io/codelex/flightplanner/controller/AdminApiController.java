@@ -1,7 +1,6 @@
 package io.codelex.flightplanner.controller;
 
 import io.codelex.flightplanner.entity.Flight;
-import io.codelex.flightplanner.response.ValidResponse;
 import io.codelex.flightplanner.services.FlightService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -25,9 +24,9 @@ public class AdminApiController {
     }
 
     @DeleteMapping("/{id}")
-    public ValidResponse deleteFlight(@PathVariable Long id) {
+    public String deleteFlight(@PathVariable Long id) {
         this.flightService.deleteFlightById(id);
-        return new ValidResponse("Flight deleted successfully");
+        return "Flight deleted successfully";
     }
 
     @PutMapping()

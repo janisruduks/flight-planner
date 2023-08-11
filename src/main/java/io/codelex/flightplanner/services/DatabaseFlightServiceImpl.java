@@ -12,6 +12,7 @@ import io.codelex.flightplanner.repository.DatabaseFlightRepository;
 import io.codelex.flightplanner.response.FlightSearchResponse;
 
 import java.util.List;
+import java.util.Optional;
 
 public class DatabaseFlightServiceImpl implements FlightService {
 
@@ -55,14 +56,14 @@ public class DatabaseFlightServiceImpl implements FlightService {
     }
 
     private void checkForDuplication(Flight flight) {
-        Flight duplicate = flightRepository.findByFromAndToAndDepartureTimeAndArrivalTimeAndCarrier(
+        Optional<Flight> duplicate = flightRepository.findByFromAndToAndDepartureTimeAndArrivalTimeAndCarrier(
                 flight.getFrom(),
                 flight.getTo(),
                 flight.getDepartureTime(),
                 flight.getArrivalTime(),
                 flight.getCarrier()
         );
-        if (duplicate != null) {
+        if (duplicate.isPresent()) {
             throw new DuplicateEntryException();
         }
     }
@@ -97,10 +98,7 @@ public class DatabaseFlightServiceImpl implements FlightService {
     @Override
     public List<Airport> getFilteredMatchList(String match) {
         String formattedMatch = match.toLowerCase().trim();
-        return flightRepository.queryForFlights(formattedMatch, formattedMatch, formattedMatch)
-                .stream()
-                .map(Flight::getFrom)
-                .toList();
+        return airportRepository.searchForMatchingAirports(formattedMatch);
     }
 
     @Override
